@@ -1,0 +1,16 @@
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Runtime data - not source code
+documents/
+uploads/
+faiss/
+
+# Env secrets
+.env

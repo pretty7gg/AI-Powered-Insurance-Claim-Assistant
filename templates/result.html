@@ -1,0 +1,928 @@
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>AI Hospitalization Insurance Claim Assessment</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #222;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            margin-top: 30px;
+        }
+
+        hr {
+            margin: 30px 0;
+        }
+
+        .assessment-box {
+            padding: 20px;
+            border: 1px solid #ddd;
+            margin: 20px 0;
+            background: #fafafa;
+        }
+
+        .score {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .risk-level {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .reason-box {
+            background: #f5f5f5;
+            padding: 15px;
+            border-left: 4px solid #555;
+        }
+
+        .signal-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .signal-table th,
+        .signal-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .signal-table th {
+            background: #f5f5f5;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .pass {
+            color: green;
+            font-weight: bold;
+        }
+
+        .fail {
+            color: red;
+            font-weight: bold;
+        }
+
+        .review {
+            color: #b36b00;
+            font-weight: bold;
+        }
+
+        .consistency-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .consistency-table th,
+        .consistency-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .consistency-table th {
+            background: #f5f5f5;
+        }
+
+        .download-button {
+            display: inline-block;
+            padding: 10px 18px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .download-button:hover {
+            background: #1d4ed8;
+        }
+
+        input,
+        textarea {
+            padding: 8px;
+        }
+
+        button {
+            padding: 10px 18px;
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <h1>
+        AI Powered Insurance Claim Assessment
+    </h1>
+
+
+    <!-- <p>
+        <strong>Application:</strong>
+        Hospitalization Insurance Claim
+    </p>
+
+
+    <p>
+        <strong>Currency:</strong>
+        INR (₹)
+    </p> -->
+
+
+    <hr>
+
+
+    <!-- ================================================= -->
+    <!-- OVERALL RESULT -->
+    <!-- ================================================= -->
+
+    <h2>
+        Claim Status:
+        {{ claim.validation.overall_status }}
+    </h2>
+
+
+    <p>
+        <strong>Important:</strong>
+
+        This is a preliminary AI-assisted assessment.
+        It is not a final insurance approval or rejection.
+        Human insurer review may still be required.
+
+    </p>
+
+
+
+
+
+    <!-- ================================================= -->
+    <!-- RISK ASSESSMENT -->
+    <!-- ================================================= -->
+
+    <div class="assessment-box">
+
+        <h2>
+            Claim Risk Assessment
+        </h2>
+
+
+        <p>
+            <strong>Claim Risk Score</strong>
+        </p>
+
+
+        <div class="score">
+            {{ claim.risk.score }}/100
+        </div>
+
+
+        <p>
+            <strong>Risk Level</strong>
+        </p>
+
+
+        <div class="risk-level">
+            {{ claim.risk.level }}
+        </div>
+
+
+        <p>
+            <strong>Evidence Quality:</strong>
+
+            {{ claim.risk.evidence_quality }}/100
+        </p>
+
+
+        <div class="reason-box">
+
+            <h3>
+                Why this score?
+            </h3>
+
+
+            <ul>
+
+                {% for reason in claim.risk.why %}
+
+                    <li>
+                        {{ reason }}
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- RISK EVIDENCE -->
+    <!-- ================================================= -->
+
+    <h3>
+        Risk Evidence
+    </h3>
+
+
+    <p>
+        These scores represent the quality and consistency
+        of the evidence available for this claim.
+    </p>
+
+
+    <table class="signal-table">
+
+        <tr>
+
+            <th>
+                Evidence Signal
+            </th>
+
+            <th>
+                Score
+            </th>
+
+        </tr>
+
+
+        <!-- 1. AMOUNT CONSISTENCY -->
+
+        <tr>
+
+            <td>
+                Amount Consistency
+            </td>
+
+            <td>
+                {{ claim.risk.signals.amount_consistency }}/100
+            </td>
+
+        </tr>
+
+
+        <!-- 2. DOCUMENT COMPLETENESS -->
+
+        <tr>
+
+            <td>
+                Document Completeness
+            </td>
+
+            <td>
+                {{ claim.risk.signals.document_completeness }}/100
+            </td>
+
+        </tr>
+
+
+        <!-- 3. CLAIM FORM VS MEDICAL BILL -->
+
+        <tr>
+
+            <td>
+                Claim Form vs Medical Bill Consistency
+            </td>
+
+            <td>
+                {{ claim.risk.signals.claim_bill_consistency }}/100
+            </td>
+
+        </tr>
+
+
+        <!-- 4. POLICY CONSISTENCY -->
+
+        <tr>
+
+            <td>
+                Policy Exclusion Consistency
+            </td>
+
+            <td>
+                {{ claim.risk.signals.policy_consistency }}/100
+            </td>
+
+        </tr>
+
+    </table>
+
+
+    <hr>
+
+
+    <!-- ================================================= -->
+    <!-- CONFIDENCE -->
+    <!-- ================================================= -->
+
+    <h2>
+        Confidence Score
+    </h2>
+
+
+    <div class="assessment-box">
+
+        <div class="score">
+            {{ claim.confidence }}%
+        </div>
+
+
+        <p>
+            This represents how strong and complete the
+            available evidence is for the assessment.
+        </p>
+
+
+        <p>
+
+            <strong>Note:</strong>
+
+            Confidence and risk are independent.
+
+            A claim can have high risk with high confidence
+            when the evidence strongly supports the risk
+            assessment.
+
+        </p>
+
+    </div>
+
+
+    <hr>
+
+
+    <!-- ================================================= -->
+    <!-- CLAIM INFORMATION -->
+    <!-- ================================================= -->
+
+    <h2>
+        1. Hospitalization Claim Information
+    </h2>
+
+
+    <p>
+
+        <strong>Patient Name:</strong>
+
+        {{ claim.claim.patient_name }}
+
+    </p>
+
+
+    <p>
+
+        <strong>Address:</strong>
+
+        {{ claim.claim.address }}
+
+    </p>
+
+
+    <p>
+
+        <strong>Claim Type:</strong>
+
+        Hospitalization
+
+    </p>
+
+
+    <p>
+
+        <strong>Hospitalization Reason:</strong>
+
+        {{ claim.claim.hospitalization_reason }}
+
+    </p>
+
+
+    <p>
+
+        <strong>Hospitalization Date:</strong>
+
+        {{ claim.claim.claim_date }}
+
+    </p>
+
+
+    <p>
+
+        <strong>Hospital / Medical Facility:</strong>
+
+        {{ claim.claim.medical_facility }}
+
+    </p>
+
+
+    <p>
+
+        <strong>Claim Amount:</strong>
+
+        {% if claim.claim.claim_amount is not none %}
+
+            ₹{{ "{:,.2f}".format(
+                claim.claim.claim_amount
+            ) }}
+
+        {% else %}
+
+            Not identified
+
+        {% endif %}
+
+    </p>
+
+
+    <p>
+
+        <strong>Description:</strong>
+
+        {{ claim.claim.description }}
+
+    </p>
+
+
+    <hr>
+
+
+    <!-- ================================================= -->
+    <!-- UPLOADED DOCUMENTS -->
+    <!-- ================================================= -->
+
+    <h2>
+        2. Uploaded Documents
+    </h2>
+
+
+    <ul>
+
+        {% for document in claim.claim.uploaded_documents %}
+
+            <li>
+                {{ document }}
+            </li>
+
+        {% endfor %}
+
+    </ul>
+
+
+    <hr>
+
+
+    <!-- ================================================= -->
+    <!-- CLAIM VALIDATION -->
+    <!-- ================================================= -->
+
+    <h2>
+        3. Claim Validation
+    </h2>
+
+
+    <!-- ================================================= -->
+    <!-- DOCUMENT CHECK -->
+    <!-- ================================================= -->
+
+    <h3>
+        Document Check
+    </h3>
+
+
+    <p>
+
+        <strong>Status:</strong>
+
+        {{ claim.validation.document_check.status }}
+
+    </p>
+
+
+    <p>
+        {{ claim.validation.document_check.message }}
+    </p>
+
+
+    {% if claim.validation.document_check.missing %}
+
+        <p>
+
+            <strong>Missing Documents:</strong>
+
+        </p>
+
+
+        <ul>
+
+            {% for document in claim.validation.document_check.missing %}
+
+                <li>
+                    {{ document }}
+                </li>
+
+            {% endfor %}
+
+        </ul>
+
+    {% endif %}
+
+
+    <!-- ================================================= -->
+    <!-- POLICY EXCLUSION -->
+    <!-- ================================================= -->
+
+    <h3>
+        Policy Exclusion Check
+    </h3>
+
+
+    <p>
+
+        <strong>Status:</strong>
+
+        {{ claim.validation.exclusion_check.status }}
+
+    </p>
+
+
+    <p>
+        {{ claim.validation.exclusion_check.message }}
+    </p>
+
+
+    <hr>
+
+
+    <!-- ================================================= -->
+    <!-- CLAIM FORM VS MEDICAL BILL -->
+    <!-- ================================================= -->
+
+    <h2>
+        4. Claim Form vs Medical Bill Consistency
+    </h2>
+
+
+    <p>
+
+        The system checks whether the information entered
+        in the claim form is consistent with the submitted
+        Medical Bill.
+
+    </p>
+
+
+    <p>
+
+        <strong>The following five fields are checked:</strong>
+
+    </p>
+
+
+    <ul>
+
+        <li>
+            Patient Name
+        </li>
+
+        <li>
+            Hospitalization Reason / Diagnosis
+        </li>
+
+        <li>
+            Hospitalization Date
+        </li>
+
+        <li>
+            Hospital / Medical Facility
+        </li>
+
+        <li>
+            Claim Amount
+        </li>
+
+    </ul>
+
+
+    {% set bill_consistency =
+        claim.validation.claim_bill_consistency|default({}) %}
+
+
+    {% set bill_status =
+        bill_consistency.status|default("REVIEW") %}
+
+
+    <div class="assessment-box">
+
+        <h3>
+            Overall Consistency Status
+        </h3>
+
+
+        {% if bill_status == "PASS" %}
+
+            <p class="pass">
+                PASS
+            </p>
+
+        {% elif bill_status == "FAIL" %}
+
+            <p class="fail">
+                FAIL
+            </p>
+
+        {% else %}
+
+            <p class="review">
+                REVIEW
+            </p>
+
+        {% endif %}
+
+
+        {% if bill_consistency.message %}
+
+            <div class="reason-box">
+
+                {{ bill_consistency.message }}
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- FIELD LEVEL CONSISTENCY -->
+    <!-- ================================================= -->
+
+    {% if bill_consistency.checks %}
+
+        <table class="consistency-table">
+
+            <tr>
+
+                <th>
+                    Field
+                </th>
+
+                <th>
+                    Status
+                </th>
+
+                <th>
+                    Claim Form Value
+                </th>
+
+                <th>
+                    Medical Bill Value
+                </th>
+
+                <th>
+                    Reason
+                </th>
+
+            </tr>
+
+
+            {% for check in bill_consistency.checks %}
+
+                <tr>
+
+                    <td>
+
+                        {{ check.field|default(
+                            "Not specified"
+                        ) }}
+
+                    </td>
+
+
+                    <td>
+
+                        {% set field_status =
+                            check.status|default("REVIEW") %}
+
+
+                        {% if field_status == "PASS" %}
+
+                            <span class="pass">
+                                PASS
+                            </span>
+
+                        {% elif field_status == "FAIL" %}
+
+                            <span class="fail">
+                                FAIL
+                            </span>
+
+                        {% else %}
+
+                            <span class="review">
+                                REVIEW
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        {{ check.submitted_value|default(
+                            "Not available"
+                        ) }}
+
+                    </td>
+
+
+                    <td>
+
+                        {{ check.bill_value|default(
+                            "Not available"
+                        ) }}
+
+                    </td>
+
+
+                    <td>
+
+                        {{ check.reason|default(
+                            "No reason provided"
+                        ) }}
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+        </table>
+
+
+    {% else %}
+
+        <div class="reason-box">
+
+            Field-level Medical Bill consistency results
+            are not available.
+
+            Please ensure that a Medical Bill PDF was
+            submitted with the claim.
+
+        </div>
+
+    {% endif %}
+
+
+    <hr>
+
+
+    <!-- ================================================= -->
+    <!-- AI EXPLANATION -->
+    <!-- ================================================= -->
+
+    <h2>
+        5. AI Explanation
+    </h2>
+
+
+    <div class="reason-box">
+
+        {{ claim.explanation }}
+
+    </div>
+
+
+    <hr>
+
+
+    <!-- ================================================= -->
+    <!-- CLAIM CHATBOT -->
+    <!-- ================================================= -->
+
+    <h2>
+        6. Ask Questions About Your Claim
+    </h2>
+
+
+    <p>
+
+        You can continue the conversation about this
+        hospitalization claim.
+
+    </p>
+
+
+    <form
+        action="/ask-claim"
+        method="POST"
+    >
+
+        <input
+            type="text"
+            name="question"
+            placeholder="Ask something about your claim"
+            size="60"
+            required
+        >
+
+
+        <button type="submit">
+            Ask About Claim
+        </button>
+
+    </form>
+
+
+    {% if claim_chat_history %}
+
+
+        <h3>
+            Claim Conversation
+        </h3>
+
+
+        {% for item in claim_chat_history %}
+
+
+            <p>
+
+                <strong>You:</strong>
+
+                {{ item.question }}
+
+            </p>
+
+
+            <p>
+
+                <strong>AI:</strong>
+
+                {{ item.answer }}
+
+            </p>
+
+
+            <hr>
+
+
+        {% endfor %}
+
+
+    {% endif %}
+
+
+    <br>
+
+
+    <a href="/">
+        Back to Home
+    </a>
+
+        <!-- ================================================= -->
+    <!-- DOWNLOAD REPORT -->
+    <!-- ================================================= -->
+
+    <p>
+
+        <a
+            href="/download-report"
+            class="download-button"
+        >
+            Download Claim Report (PDF)
+        </a>
+
+    </p>
+
+</body>
+
+</html>

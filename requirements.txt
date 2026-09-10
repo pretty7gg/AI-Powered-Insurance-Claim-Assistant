@@ -1,0 +1,8 @@
+Flask
+langchain
+langchain-community
+langchain-ollama
+langchain-huggingface
+faiss-cpu
+pypdf
+sentence-transformers
