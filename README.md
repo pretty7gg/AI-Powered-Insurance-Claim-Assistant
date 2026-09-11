@@ -60,25 +60,25 @@ This platform relies on three categories of input to generate a claim assessment
 
 ```
                          ┌──────────────────────────┐
-                         │           USER            │
-                         └────────────┬──────────────┘
+                         │           USER           │
+                         └────────────┬─────────────┘
                                       │
                                       ▼
                          ┌──────────────────────────┐
-                         │       FLASK WEB UI        │
-                         │  Policy Chat · Claim Form │
-                         │  Document Upload · Result │
-                         │  Claim Chat · PDF Report  │
-                         └────────────┬──────────────┘
+                         │       FLASK WEB UI       │
+                         │  Policy Chat · Claim Form│
+                         │  Document Upload · Result│
+                         │  Claim Chat · PDF Report │
+                         └────────────┬─────────────┘
                                       │
                 ┌─────────────────────┴─────────────────────┐
                 ▼                                           ▼
-      ┌──────────────────────┐                   ┌──────────────────────┐
-      │  POLICY KNOWLEDGE     │                   │   CLAIM PROCESSING    │
-      │      PIPELINE         │                   │      PIPELINE         │
-      ├──────────────────────┤                   ├──────────────────────┤
-      │ Policy PDFs           │                   │ Claim Form            │
-      │ (Coverage, Exclusions)│                   │ Medical Bill,         │
+      ┌──────────────────────--┐                   ┌──────────────────────-┐
+      │  POLICY KNOWLEDGE      │                   │   CLAIM PROCESSING    │
+      │      PIPELINE          │                   │      PIPELINE         │
+      ├──────────────────────  ┤                   ├────────────────────── ┤
+      │ Policy PDFs            │                   │ Claim Form            │
+      │(Coverage, Exclusions)  │                   │ Medical Bill,         │
       │        │               │                   │ Discharge Summary,    │
       │        ▼               │                   │ Reports, etc.         │
       │ PDF Extraction +       │                   │        │              │
