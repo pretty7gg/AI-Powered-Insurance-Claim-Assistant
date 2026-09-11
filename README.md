@@ -116,7 +116,7 @@ This platform relies on three categories of input to generate a claim assessment
               ┌────────────────────────┼────────────────────────┐
               ▼                        ▼                        ▼
        ┌─────────────┐         ┌──────────────┐         ┌───────────────┐
-       │   Claim     │         │   Claim Q&A  │          │   PDF         │
+       │   Claim     │         │   Claim Q&A  │         │   PDF         │
        │  Assessment │         │   Chatbot    │         │   Assessment  │
        │   Result    │         │              │         │   Report      │
        └─────────────┘         └──────────────┘         └───────────────┘
