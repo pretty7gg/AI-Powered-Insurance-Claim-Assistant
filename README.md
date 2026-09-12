@@ -35,15 +35,23 @@ ClaimSense AI is a platform that combines **policy-aware RAG**, **medical docume
 
 ## 📸 Screenshots
 
-> _Screenshots to be added._
+### Policy PDF Chatbot
+![policy](screenshots/PolicyPDFChatbot.png)
 
-| Policy Upload & Chat | Claim Submission Form | Claim Assessment Result |
-|---|---|---|
-| _coming soon_ | _coming soon_ | _coming soon_ |
+### Claim Submission Form 
+![claim form](screenshots/ClaimForm.png)
 
-| Claim Chatbot | Downloaded PDF Report |
-|---|---|
-| _coming soon_ | _coming soon_ |
+### Claim PDFs Uplaod Section
+![claim pdfs](screenshots/ClaimDetailsUploadSection.png)
+
+### Claim Assessment
+![first](screenshots/ClaimAssessment1.png)
+![second](screenshots/ClaimAssesment2.png)
+![third](screenshots/claimassessment3.png)
+
+### Claim Chatbot 
+![claim chatbot](screenshots/claim chatbot.png)
+
 
 ---
 
@@ -132,4 +140,4 @@ This platform relies on three categories of input to generate a claim assessment
 
 Every submitted claim can be exported as a downloadable PDF report containing the overall claim status, risk score, and field-level consistency checks against the medical bill.
 
-> _Sample report to be attached here._
+![final_report](/Users/prettygoyal/Documents/Insurance_rag/hospitalization_claim_assessment_report.pdf)
